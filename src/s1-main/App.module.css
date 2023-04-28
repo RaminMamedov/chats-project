@@ -7,5 +7,14 @@
 }
 
 .hwTitle {
-
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: black;
+    text-align: left;
+    font-style: normal;
+    padding-top: 131px;
+    padding-left: 70px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #D9D9D9;
 }
