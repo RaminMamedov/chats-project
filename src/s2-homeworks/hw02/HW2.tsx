@@ -17,17 +17,17 @@ import s2 from '../../s1-main/App.module.css'
 * */
 
 // types
-export type AffairPriorityType = any // need to fix any
+export type AffairPriorityType = 'high' | 'low' | 'middle' //
 export type AffairType = {
-    _id: any // need to fix any
-    name: any // need to fix any
+    _id: number
+    name: string
     priority: AffairPriorityType
 }
 export type FilterType = 'all' | AffairPriorityType
 
 // constants
-const defaultAffairs: any = [ // need to fix any
-    {_id: 1, name: 'React', priority: 'high'}, // студенты могут изменить содержимое name и количество элементов в массиве, ...priority не менять!
+const defaultAffairs: AffairType[] = [ // протипизировали массив: выше в AffairType
+    {_id: 1, name: 'React', priority: 'high'},
     {_id: 2, name: 'anime', priority: 'low'},
     {_id: 3, name: 'games', priority: 'low'},
     {_id: 4, name: 'work', priority: 'high'},
@@ -35,22 +35,20 @@ const defaultAffairs: any = [ // need to fix any
 ]
 
 // pure helper functions
-export const filterAffairs = (affairs: any, filter: any): any => { // need to fix any
-
-
-    return affairs // need to fix
+export const filterAffairs = (affairs: AffairType[], filter: FilterType): AffairType[] => { // в переменной filter по умолчанию сидит all
+    return filter === 'all' ? affairs : affairs.filter(affair => affair.priority === filter) // в переменную filter может прийти другое значение priority
 }
-export const deleteAffair = (affairs: any, _id: any): any => { // need to fix any
-
-    return affairs // need to fix
+export const deleteAffair = (affairs: AffairType[], _id: number): AffairType[] => { // тип affairs видно ниже в useState
+    return affairs.filter(element => element._id !== _id) //
 }
 
 function HW2() {
-    const [affairs, setAffairs] = useState<any>(defaultAffairs) // need to fix any
+    const [affairs, setAffairs] = useState<AffairType[]>(defaultAffairs) // в affairs запишется весь массив данных (локальный стейт)
     const [filter, setFilter] = useState<FilterType>('all')
 
-    const filteredAffairs = filterAffairs(affairs, filter)
-    const deleteAffairCallback = (_id: any) => { // need to fix any
+    const filteredAffairs = filterAffairs(affairs, filter) // запишем зачение функции - кликнутой кнопки (high например) в переменную
+    const deleteAffairCallback = (_id: number) => { // получим id кликнутой кнопки
+        setAffairs(deleteAffair(affairs, _id)) // запишем в массив данных (локальный стейт) инф о клике на кнопку (удалить таску с id)
         // need to fix
     }
 
