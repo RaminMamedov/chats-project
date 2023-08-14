@@ -1,9 +1,21 @@
 .select {
+    width: 100%; /* ширина списка будет занимать всю ширину родителя */
+    padding: 10px 15px; /* небольшие отступы для удобства */
+    font-size: 16px; /* размер шрифта */
+    border: 1px solid #ccc; /* тонкая рамка вокруг списка */
+    border-radius: 4px; /* закругленные уголки */
+    appearance: none; /* это для удаления стандартного внешнего вида в некоторых браузерах */
+    background-color: #fff; /* белый фон */
 }
 
 .select:focus {
+    outline: none; /* удаление стандартного контура браузера */
+    border-color: #007BFF; /* изменение цвета рамки на синий при фокусе */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 
 .option:hover {
+    background-color: #e9ecef; /* нейтральный фоновый цвет при наведении */
+    cursor: pointer;
 }
