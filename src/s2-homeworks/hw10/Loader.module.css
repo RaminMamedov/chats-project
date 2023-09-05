@@ -1,3 +1,22 @@
 .loader {
-    /*свг и/или анимация*/
+    position: absolute;
+    width: 108px;
+    height: 108px;
+    left: 50%; /* Чтобы центрировать по горизонтали */
+    top: 50%; /* Чтобы центрировать по вертикали */
+    transform: translate(-50%, -50%); /* Чтобы центрировать точно в центр экрана */
+
+    background: conic-gradient(from 90deg at 50% 50%, rgba(255, 255, 255, 0) 0deg, #512DE4 360deg);
+    border-radius: 50%; /* Для круглой формы */
+
+    animation: spin 1s linear infinite; /* Анимация вращения */
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
