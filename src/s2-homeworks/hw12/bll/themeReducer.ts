@@ -3,12 +3,8 @@ const initState = {
     themeId: 1,
 };
 
-type ThemeState = {
-    themeId: number;
-};
 
-
-export const themeReducer = (state = initState, action: changeThemeIdType): ThemeState => {
+export const themeReducer = (state = initState, action: changeThemeIdType): typeof initState => {
     switch (action.type) {
         case 'SET_THEME_ID':
             return {
