@@ -19,31 +19,83 @@ const HW13 = () => {
     const [text, setText] = useState('')
     const [info, setInfo] = useState('')
     const [image, setImage] = useState('')
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const send = (x?: boolean | null) => () => {
         const url =
             x === null
                 ? 'https://xxxxxx.ccc' // имитация запроса на не корректный адрес
-                : 'https://samurai.it-incubator.io/api/3.0/homework/test'
+                : 'https://samurai.it-incubator.io/api/3.0/homework/test';
 
-        setCode('')
-        setImage('')
-        setText('')
-        setInfo('...loading')
+        setCode('');
+        setImage('');
+        setText('');
+        setInfo('...loading');
+        setIsLoading(true);
 
         axios
             .post(url, {success: x})
             .then((res) => {
-                setCode('Код 200!')
-                setImage(success200)
-                // дописать
+                setCode('Код 200!');
+                setImage(success200);
 
+                // Устанавливаем текст и информацию на основе ответа от сервера
+                setText(res.data.message || 'Success message from server');
+                setInfo('Data successfully sent to the server');
             })
             .catch((e) => {
-                // дописать
-
+                // В случае ошибки устанавливаем соответствующие сообщения
+                if (e.response) {
+                    // Ошибка, возникшая из-за ответа сервера
+                    setCode(`Код ${e.response.status}!`);
+                    setText(e.response.data.message || 'Error message from server');
+                    setInfo('There was an error sending data to the server');
+                    setImage(error400);
+                } else if (e.request) {
+                    // Запрос был создан, но сервер не ответил
+                    setCode('No Response!');
+                    setText('No response from the server');
+                    setInfo('Please check your network connection or try again later');
+                    setImage(error500);
+                } else {
+                    // Ошибка при настройке запроса
+                    setCode('Request Error!');
+                    setText('There was an error setting up the request');
+                    setInfo(e.message);
+                    setImage(errorUnknown);
+                }
             })
+            .finally(() => {
+                setIsLoading(false); // Возвращаем состояние загрузки обратно в false после завершения запроса
+            });
     }
+
+
+    // const send = (x?: boolean | null) => () => {
+    //     const url =
+    //         x === null
+    //             ? 'https://xxxxxx.ccc' // имитация запроса на не корректный адрес
+    //             : 'https://samurai.it-incubator.io/api/3.0/homework/test'
+    //
+    //     setCode('')
+    //     setImage('')
+    //     setText('')
+    //     setInfo('...loading')
+    //
+    //     axios
+    //         .post(url, {success: x})
+    //         .then((res) => {
+    //             setCode('Код 200!')
+    //             setImage(success200)
+    //             // дописать
+    //
+    //         })
+    //         .catch((e) => {
+    //             // дописать
+    //
+    //         })
+    // }
 
     return (
         <div id={'hw13'}>
@@ -55,6 +107,7 @@ const HW13 = () => {
                         id={'hw13-send-true'}
                         onClick={send(true)}
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
@@ -64,6 +117,7 @@ const HW13 = () => {
                         id={'hw13-send-false'}
                         onClick={send(false)}
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
@@ -73,6 +127,7 @@ const HW13 = () => {
                         id={'hw13-send-undefined'}
                         onClick={send(undefined)}
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
@@ -82,6 +137,7 @@ const HW13 = () => {
                         id={'hw13-send-null'}
                         onClick={send(null)} // имитация запроса на не корректный адрес
                         xType={'secondary'}
+                        disabled={isLoading}
                         // дописать
 
                     >
