@@ -41,28 +41,28 @@ const HW13 = () => {
                 setImage(success200);
 
                 // Устанавливаем текст и информацию на основе ответа от сервера
-                setText(res.data.message || 'Success message from server');
-                setInfo('Data successfully sent to the server');
+                setText( '...все ок)' || 'Success message from server');
+                setInfo('код 200 - обычно означает что скорее всего всё ок)' || 'Data successfully sent to the server');
             })
             .catch((e) => {
                 // В случае ошибки устанавливаем соответствующие сообщения
                 if (e.response) {
                     // Ошибка, возникшая из-за ответа сервера
                     setCode(`Код ${e.response.status}!`);
-                    setText(e.response.data.message || 'Error message from server');
-                    setInfo('There was an error sending data to the server');
+                    setText('Ты не отправил success в body вообще!' || 'Error message from server');
+                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!' || 'There was an error sending data to the server');
                     setImage(error400);
                 } else if (e.request) {
                     // Запрос был создан, но сервер не ответил
                     setCode('No Response!');
-                    setText('No response from the server');
-                    setInfo('Please check your network connection or try again later');
+                    setText('эмитация ошибки на сервере' || 'No response from the server');
+                    setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)' || 'Please check your network connection or try again later');
                     setImage(error500);
                 } else {
                     // Ошибка при настройке запроса
-                    setCode('Request Error!');
-                    setText('There was an error setting up the request');
-                    setInfo(e.message);
+                    setCode('Error!');
+                    setText('Network Error' || 'There was an error setting up the request');
+                    setInfo('AxiosError' || e.message);
                     setImage(errorUnknown);
                 }
             })
