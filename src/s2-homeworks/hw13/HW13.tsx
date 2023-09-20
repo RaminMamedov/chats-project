@@ -41,23 +41,21 @@ const HW13 = () => {
                 setImage(success200);
 
                 // Устанавливаем текст и информацию на основе ответа от сервера
-                setText( '...все ок)' || 'Success message from server');
+                setText( '...всё ок)' || 'Success message from server');
                 setInfo('код 200 - обычно означает что скорее всего всё ок)' || 'Data successfully sent to the server');
             })
             .catch((e) => {
                 // В случае ошибки устанавливаем соответствующие сообщения
-                if (e.response) {
-                    // Ошибка, возникшая из-за ответа сервера
-                    setCode(`Код ${e.response.status}!`);
-                    setText('Ты не отправил success в body вообще!' || 'Error message from server');
-                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!' || 'There was an error sending data to the server');
-                    setImage(error400);
-                } else if (e.request) {
-                    // Запрос был создан, но сервер не ответил
-                    setCode('No Response!');
+                if (e.response && e.response.status === 500) {
+                    setCode('Ошибка 500!');
                     setText('эмитация ошибки на сервере' || 'No response from the server');
                     setInfo('ошибка 500 - обычно означает что что-то сломалось на сервере, например база данных)' || 'Please check your network connection or try again later');
                     setImage(error500);
+                } else if (e.response && e.response.status === 400) {
+                    setCode(`Ошибка 400!`);
+                    setText('Ты не отправил success в body вообще!' || 'Error message from server');
+                    setInfo('ошибка 400 - обычно означает что скорее всего фронт отправил что-то не то на бэк!' || 'There was an error sending data to the server');
+                    setImage(error400);
                 } else {
                     // Ошибка при настройке запроса
                     setCode('Error!');
@@ -67,35 +65,10 @@ const HW13 = () => {
                 }
             })
             .finally(() => {
-                setIsLoading(false); // Возвращаем состояние загрузки обратно в false после завершения запроса
+                setIsLoading(false);
             });
     }
 
-
-    // const send = (x?: boolean | null) => () => {
-    //     const url =
-    //         x === null
-    //             ? 'https://xxxxxx.ccc' // имитация запроса на не корректный адрес
-    //             : 'https://samurai.it-incubator.io/api/3.0/homework/test'
-    //
-    //     setCode('')
-    //     setImage('')
-    //     setText('')
-    //     setInfo('...loading')
-    //
-    //     axios
-    //         .post(url, {success: x})
-    //         .then((res) => {
-    //             setCode('Код 200!')
-    //             setImage(success200)
-    //             // дописать
-    //
-    //         })
-    //         .catch((e) => {
-    //             // дописать
-    //
-    //         })
-    // }
 
     return (
         <div id={'hw13'}>
@@ -109,7 +82,6 @@ const HW13 = () => {
                         xType={'secondary'}
                         disabled={isLoading}
                         // дописать
-
                     >
                         Send true
                     </SuperButton>
@@ -119,7 +91,6 @@ const HW13 = () => {
                         xType={'secondary'}
                         disabled={isLoading}
                         // дописать
-
                     >
                         Send false
                     </SuperButton>
@@ -129,7 +100,6 @@ const HW13 = () => {
                         xType={'secondary'}
                         disabled={isLoading}
                         // дописать
-
                     >
                         Send undefined
                     </SuperButton>
@@ -139,7 +109,6 @@ const HW13 = () => {
                         xType={'secondary'}
                         disabled={isLoading}
                         // дописать
-
                     >
                         Send null
                     </SuperButton>
