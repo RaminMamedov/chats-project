@@ -24,23 +24,29 @@ const getTechs = (find: string) => {
         })
 }
 
+const initialTechs = ['html', 'css', 'javascript', 'typescript', 'scss', 'jest'];
+
 const HW14 = () => {
     const [find, setFind] = useState('')
     const [isLoading, setLoading] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
-    const [techs, setTechs] = useState<string[]>([])
+    // const [techs, setTechs] = useState<string[]>([])
+    const [techs, setTechs] = useState<string[]>(initialTechs); // Задаем начальное состояние для techs
+
 
 
     const sendQuery = (value: string) => {
-        setLoading(true)
-        getTechs(value)
-            .then((res) => {
-                if (res && res.data) {
-                    setTechs(res.data.techs);
-                }
-                setLoading(false);
-            })
-    }
+        if (value) {
+            setLoading(true);
+            getTechs(value)
+                .then((res) => {
+                    if (res && res.data) {
+                        setTechs(res.data.techs);
+                    }
+                    setLoading(false);
+                })
+        }
+    };
 
     const onChangeText = (value: string) => {
         setFind(value);
