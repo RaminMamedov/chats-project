@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ChangeEvent} from 'react'
 import SuperSelect from '../../../hw07/common/c5-SuperSelect/SuperSelect'
 import {Pagination} from '@mui/material'
 import s from './SuperPagination.module.css'
@@ -16,22 +16,32 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
         page, itemsCountForPage, totalCount, onChange, id = 'hw15',
     }
 ) => {
-    const lastPage = 10 // пишет студент // вычислить количество страниц
+    const lastPage = Math.ceil(totalCount / itemsCountForPage); // вычисляем количество страниц
 
-    const onChangeCallback = (event: any, page: number) => {
-        // пишет студент
+    const onChangeCallback = (event: any, newPage: number) => {
+        onChange(newPage, itemsCountForPage);
     }
 
-    const onChangeSelect = (event: any) => {
-        // пишет студент
+    const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newCount = Number(e.target.value);
+        onChange(1, newCount);
     }
+
+
 
     return (
         <div className={s.pagination}>
             <Pagination
                 id={id + '-pagination'}
                 sx={{
-                    // стили для Pagination // пишет студент
+                    width: '80%', // уменьшим ширину до 80% от её текущего значения
+                    height: '80%', // уменьшим высоту до 80% от её текущего значения
+                    '& .MuiPaginationItem-root': { // это для стилизации индивидуальных кнопок пагинации
+                        width: '80%',
+                        height: '80%',
+                        margin: '0.1rem', // уменьшить отступ между элементами пагинации
+                        fontSize: '0.8rem' // уменьшить размер шрифта элементов пагинации
+                    }
                 }}
                 page={page}
                 count={lastPage}
