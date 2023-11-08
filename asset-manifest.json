@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/chats-project/static/css/main.e6d8009e.css",
-    "main.js": "/chats-project/static/js/main.be404f4e.js",
+    "main.js": "/chats-project/static/js/main.e29f08ea.js",
     "static/js/787.d8ef7524.chunk.js": "/chats-project/static/js/787.d8ef7524.chunk.js",
     "static/media/avatar.png": "/chats-project/static/media/avatar.d947cb9d0d13765666b6.png",
     "static/media/200.svg": "/chats-project/static/media/200.96248f7df0dde10e0a82ac30418f50bc.svg",
@@ -15,11 +15,11 @@
     "index.html": "/chats-project/index.html",
     "static/media/burger.svg": "/chats-project/static/media/burger.700e416f7bfe3697f96b36c778d25355.svg",
     "main.e6d8009e.css.map": "/chats-project/static/css/main.e6d8009e.css.map",
-    "main.be404f4e.js.map": "/chats-project/static/js/main.be404f4e.js.map",
+    "main.e29f08ea.js.map": "/chats-project/static/js/main.e29f08ea.js.map",
     "787.d8ef7524.chunk.js.map": "/chats-project/static/js/787.d8ef7524.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6d8009e.css",
-    "static/js/main.be404f4e.js"
+    "static/js/main.e29f08ea.js"
   ]
 }
