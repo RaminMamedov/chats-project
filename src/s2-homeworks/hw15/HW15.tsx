@@ -47,62 +47,37 @@ const HW15 = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [techs, setTechs] = useState<TechType[]>([])
 
-    const sendQuery = (params: ParamsType) => {
+    const sendQuery = (params: any) => {
         setLoading(true)
         getTechs(params)
-            .then((res) => {
-                if (res && res.data) {
-                    setTechs(res.data.techs);
-                    setTotalCount(res.data.totalCount);
-                }
-                setLoading(false);
-            });
+            .then((res: any) => {
+                setTechs(res.data.techs)
+                setTotalCount(res.data.totalCount) // 36
+                setLoading(false)
+            })
+
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
-        setPage(newPage);
-        setCount(newCount);
-
-        const newParams = { page: newPage, count: newCount, sort };
-        sendQuery(newParams);
-
-        // Update search params in the URL
-        const urlParams = new URLSearchParams();
-        urlParams.set('page', String(newPage));
-        urlParams.set('count', String(newCount));
-        setSearchParams(urlParams);
+        setPage(newPage)
+        setCount(newCount)
+        sendQuery({page: newPage, count: newCount})
+        setSearchParams({page: String(newPage)})
     }
 
     const onChangeSort = (newSort: string) => {
-        let updatedSort = newSort;
-
-        if (sort === newSort) {
-            updatedSort = ''; // Reset sort if clicked again
-        }
-
-        setSort(updatedSort);
-        setPage(1); // Reset to first page when sorting
-
-        const newParams = { page: 1, count, sort: updatedSort };
-        sendQuery(newParams);
-
-        // Update search params in the URL
-        const urlParams = new URLSearchParams();
-        urlParams.set('sort', updatedSort);
-        urlParams.set('page', '1');
-        setSearchParams(urlParams);
+        setSort(newSort)
+        setPage(1)
+        sendQuery({page: String(page), count: String(count), sort: newSort})
+        setSearchParams({page: String(page), sort: newSort})
     }
 
     useEffect(() => {
-        const params = Object.fromEntries(searchParams);
-        sendQuery({
-            page: params.page ? parseInt(params.page) : 1,
-            count: params.count ? parseInt(params.count) : 4,
-            sort: params.sort || ''
-        });
-        setPage(params.page ? parseInt(params.page) : 1);
-        setCount(params.count ? parseInt(params.count) : 4);
-    }, []);
+        const params = Object.fromEntries(searchParams)
+        sendQuery({page: params.page, count: params.count})
+        setPage(+params.page || 1)
+        setCount(+params.count || 4)
+    }, [])
 
     const mappedTechs = techs.map(t => (
         <div key={t.id} className={s.row}>
@@ -121,9 +96,7 @@ const HW15 = () => {
             <div className={s2.hwTitle}>Homework #15</div>
 
             <div className={s2.hw}>
-                {idLoading && <div className={s.overlay}></div>}
                 {idLoading && <div id={'hw15-loading'} className={s.loading}>Loading...</div>}
-
                 <SuperPagination
                     page={page}
                     itemsCountForPage={count}

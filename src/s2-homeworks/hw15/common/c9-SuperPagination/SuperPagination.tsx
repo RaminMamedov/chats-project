@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react'
+import React from 'react'
 import SuperSelect from '../../../hw07/common/c5-SuperSelect/SuperSelect'
 import {Pagination} from '@mui/material'
 import s from './SuperPagination.module.css'
@@ -16,32 +16,22 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
         page, itemsCountForPage, totalCount, onChange, id = 'hw15',
     }
 ) => {
-    const lastPage = Math.ceil(totalCount / itemsCountForPage); // вычисляем количество страниц
+    const lastPage = Math.ceil(totalCount / itemsCountForPage)
 
-    const onChangeCallback = (event: any, newPage: number) => {
-        onChange(newPage, itemsCountForPage);
+    const onChangeCallback = (event: any, page: number) => {
+        onChange(page, itemsCountForPage)
     }
 
-    const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newCount = Number(e.target.value);
-        onChange(1, newCount);
+    const onChangeSelect = (event: any) => {
+        onChange(page, event)
     }
-
-
 
     return (
         <div className={s.pagination}>
             <Pagination
                 id={id + '-pagination'}
                 sx={{
-                    width: '80%', // уменьшим ширину до 80% от её текущего значения
-                    height: '80%', // уменьшим высоту до 80% от её текущего значения
-                    '& .MuiPaginationItem-root': { // это для стилизации индивидуальных кнопок пагинации
-                        width: '80%',
-                        height: '80%',
-                        margin: '0.1rem', // уменьшить отступ между элементами пагинации
-                        fontSize: '0.8rem' // уменьшить размер шрифта элементов пагинации
-                    }
+                    // стили для Pagination // пишет студент
                 }}
                 page={page}
                 count={lastPage}
@@ -62,7 +52,7 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
                     {id: 7, value: 7},
                     {id: 10, value: 10},
                 ]}
-                onChange={onChangeSelect}
+                onChangeOption={onChangeSelect}
             />
 
             <span className={s.text2}>
